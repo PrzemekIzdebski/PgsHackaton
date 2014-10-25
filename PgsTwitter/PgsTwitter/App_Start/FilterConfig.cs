@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using PgsTwitter.Controllers;
 
 namespace PgsTwitter
 {
@@ -8,6 +9,7 @@ namespace PgsTwitter
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new CheckUserFilter());
         }
     }
 }
