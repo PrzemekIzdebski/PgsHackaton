@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Amazon.DynamoDBv2.DataModel;
 using PgsTwitter.Entities;
+using PgsTwitter.Models.Users;
 
 namespace PgsTwitter.Services
 {
@@ -19,6 +20,11 @@ namespace PgsTwitter.Services
         public UserServices(DynamoDBContext context)
         {
             this.context = context;
+        }
+        
+        public User Load(string userName)
+        {
+            return context.Load<User>(userName);
         }
 
         public void CreateUserIfNotExists(string userName)
@@ -45,5 +51,12 @@ namespace PgsTwitter.Services
         }
 
 
+        public void AddToObserved(AddObservedModel addObservedModel)
+        {
+            var user = context.Load<User>(addObservedModel.ObservingUser);
+
+            user.AddToLiked(addObservedModel.ObservedUser);
+            context.Save<User>(user);
+        }
     }
 }
