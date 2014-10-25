@@ -62,6 +62,27 @@ namespace PgsTwitter.DataAccess
                     }
             };
 
+            createTableRequest.GlobalSecondaryIndexes = new List<GlobalSecondaryIndex>()
+                {
+                    new GlobalSecondaryIndex()
+                        {
+                            IndexName = Table.ObservedIndex,
+                            KeySchema = new List<KeySchemaElement>
+                            {
+                                new KeySchemaElement
+                                {
+                                    AttributeName = "ObservedUser",
+                                    KeyType = KeyType.HASH
+                                }
+                            },
+                            ProvisionedThroughput = new ProvisionedThroughput() { ReadCapacityUnits = 1, WriteCapacityUnits = 1 },
+                            Projection = new Projection()
+                                {
+                                    ProjectionType = ProjectionType.ALL
+                                }
+                        }
+                };
+
             createTableRequest.AttributeDefinitions = new List<AttributeDefinition>
             {
                 new AttributeDefinition

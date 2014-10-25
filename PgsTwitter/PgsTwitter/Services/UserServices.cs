@@ -71,5 +71,15 @@ namespace PgsTwitter.Services
             var queryResult = context.Query<Observing>(userName);
             return queryResult.Select(observing => observing.ObservedUser).ToList();
         }
+
+        public List<string> GetObserving(string userName)
+        {
+            var queryResult = context.Query<Observing>(userName, new DynamoDBOperationConfig()
+                {
+                    IndexName = PgsTwitter.Entities.Table.ObservedIndex
+                });
+            return queryResult.Select(observing => observing.ObservingUser).ToList();
+        }
+
     }
 }

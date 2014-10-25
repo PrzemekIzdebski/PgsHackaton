@@ -12,7 +12,7 @@
 @Html.ActionLink("Messages", "List", "Message")
 </p>
 <p>
-    See all users:
+    All users:
 
     <ul>
         @{
@@ -34,11 +34,25 @@
 </p>
 
 <p>
-See likes users:
+    Users like by you:
 
     <ul>
         @{
             foreach (var name in Model.LikeUserNames)
+            {
+                <li>@name</li>
+            }
+        }
+
+    </ul>
+</p>
+
+<p>
+    You are liked by the following users:
+
+    <ul>
+        @{
+            foreach (var name in Model.ObservedByUsers)
             {
                 <li>@name</li>
             }
