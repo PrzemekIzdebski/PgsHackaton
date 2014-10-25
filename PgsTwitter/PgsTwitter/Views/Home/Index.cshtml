@@ -1,5 +1,9 @@
-﻿@{
+﻿@model PgsTwitter.Models.Home.HomeModel
+
+@{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+
+Hello, user @Html.DisplayFor(model => model.UserName) . Do you want to @Html.ActionLink("log out", "LogOut", "Login") ?

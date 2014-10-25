@@ -129,15 +129,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\Login\CheckUserFilter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Login\LoginController.cs" />
-    <Compile Include="Controllers\Login\SkipLoginCheckAttribute.cs" />
     <Compile Include="DataAccess\Dynamo.cs" />
     <Compile Include="Entities\Table.cs" />
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\User.cs" />
+=======
+    <Compile Include="Controllers\Login\CheckUserFilter.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="Controllers\Login\SkipLoginCheckAttribute.cs" />
+>>>>>>> 1881afbbc5d6022ae561798a1b84091814f305fb
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
