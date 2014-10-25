@@ -6,4 +6,20 @@
 
 <h2>Index</h2>
 
-Hello, user @Html.DisplayFor(model => model.UserName) . Do you want to @Html.ActionLink("log out", "LogOut", "Login") ?
+<p>
+    Hello, user @Html.DisplayFor(model => model.UserName) . Do you want to @Html.ActionLink("log out", "LogOut", "Login") ?
+</p>
+
+<p>
+See all users:
+
+    <ul>
+        @{
+            foreach (var name in Model.OtherUsersNames)
+            {
+                <li>@name</li>
+            }
+        }
+
+    </ul>
+</p>

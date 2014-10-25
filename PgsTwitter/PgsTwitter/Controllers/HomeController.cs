@@ -17,10 +17,16 @@ namespace PgsTwitter.Controllers
 
         public ActionResult Index()
         {
+            var userServices = new UserServices(Context);
+            var otherUsers = userServices.List();
+            var usersNames = otherUsers.Select(user => user.Username).ToList();
+
             var model = new HomeModel()
                 {
-                    UserName = LoginServices.UserName
+                    UserName = LoginServices.UserName,
+                    OtherUsersNames = usersNames
                 };
+
             return View(model);
         }
 

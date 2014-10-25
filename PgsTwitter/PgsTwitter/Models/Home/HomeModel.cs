@@ -8,5 +8,6 @@ namespace PgsTwitter.Models.Home
     public class HomeModel
     {
         public string UserName { get; set; }
+        public List<string> OtherUsersNames { get; set; } 
     }
 }

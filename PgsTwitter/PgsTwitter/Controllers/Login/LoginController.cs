@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using PgsTwitter.Controllers.Login;
+﻿using System.Web.Mvc;
 using PgsTwitter.Models.Login;
 using PgsTwitter.Services;
 
-namespace PgsTwitter.Controllers
+namespace PgsTwitter.Controllers.Login
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         //
         // GET: /Login/
@@ -25,7 +19,7 @@ namespace PgsTwitter.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel model)
         {
-            LoginServices.LogIn(model.Name);
+            LoginServices.LogIn(model.Name, Context);
             return RedirectToAction("Index", "Home");
         }
 
