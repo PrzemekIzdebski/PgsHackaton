@@ -5,11 +5,12 @@
 }
 
 <h2>Index</h2>
-
 <p>
     Hello, user @Html.DisplayFor(model => model.UserName) . Do you want to @Html.ActionLink("log out", "LogOut", "Login") ?
 </p>
-
+<p>
+@Html.ActionLink("Messages", "List", "Message")
+</p>
 <p>
     See all users:
 

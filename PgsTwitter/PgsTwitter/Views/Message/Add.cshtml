@@ -1,0 +1,16 @@
+﻿@model PgsTwitter.Models.Message.AddModel
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add</h2>
+
+Add message
+
+@using(Html.BeginForm())
+{
+    @Html.EditorFor(m=>m.Text)
+
+    <input type="submit" value="Add" />
+}

@@ -90,8 +90,13 @@ namespace PgsTwitter.DataAccess
             {
                 new KeySchemaElement
                 {
-                    AttributeName = "Id",
+                    AttributeName = "Username",
                     KeyType = KeyType.HASH
+                },
+                new KeySchemaElement
+                {
+                    AttributeName = "PostedOn",
+                    KeyType = KeyType.RANGE
                 }
             };
 
@@ -99,9 +104,14 @@ namespace PgsTwitter.DataAccess
             {
                 new AttributeDefinition
                 {
-                    AttributeName = "Id",
+                    AttributeName = "Username",
+                    AttributeType = ScalarAttributeType.S
+                },
+                new AttributeDefinition
+                {
+                    AttributeName = "PostedOn",
                     AttributeType = ScalarAttributeType.N
-                }
+                },
             };
 
             createTableRequest.ProvisionedThroughput = new ProvisionedThroughput() { ReadCapacityUnits = 1, WriteCapacityUnits = 1 };
