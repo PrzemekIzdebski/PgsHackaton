@@ -16,13 +16,19 @@ namespace PgsTwitter.Controllers
 
         public ActionResult List(string username)
         {
-            if (username.IsNullOrWhiteSpace())
-            {
-                username = LoginServices.UserName;
-            }
+            //if (username.IsNullOrWhiteSpace())
+            //{
+            //    username = LoginServices.UserName;
+            //}
 
             var msgs = MessageService.GetMessages(username);
             return View(msgs);
+        }
+
+        public ActionResult My()
+        {
+            var msgs = MessageService.GetMessages(LoginServices.UserName);
+            return View("List", msgs);
         }
 
         [HttpGet]
@@ -35,7 +41,7 @@ namespace PgsTwitter.Controllers
         public ActionResult Add(AddModel addModel)
         {
             MessageService.PostMessage(LoginServices.UserName, addModel.Text);
-            return RedirectToAction("List");
+            return RedirectToAction("My");
         }
     }
 }
