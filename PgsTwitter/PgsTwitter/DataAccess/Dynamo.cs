@@ -41,6 +41,39 @@ namespace PgsTwitter.DataAccess
             {
                 CreateObservingTable(client);
             }
+
+            if (!tables.TableNames.Contains(Table.Tag))
+            {
+                CreateTagTable(client);
+            }
+        }
+
+        private static void CreateTagTable(IAmazonDynamoDB client)
+        {
+            var createTableRequest = new CreateTableRequest();
+            createTableRequest.TableName = Table.Tag;
+
+            createTableRequest.KeySchema = new List<KeySchemaElement>
+            {
+                new KeySchemaElement
+                {
+                    AttributeName = "Name",
+                    KeyType = KeyType.HASH
+                }
+            };
+
+            createTableRequest.AttributeDefinitions = new List<AttributeDefinition>
+            {
+                new AttributeDefinition
+                {
+                    AttributeName = "Name",
+                    AttributeType = ScalarAttributeType.S
+                }
+            };
+
+            createTableRequest.ProvisionedThroughput = new ProvisionedThroughput() { ReadCapacityUnits = 1, WriteCapacityUnits = 1 };
+
+            client.CreateTable(createTableRequest);
         }
 
         private static void CreateObservingTable(IAmazonDynamoDB client)
