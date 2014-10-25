@@ -7,5 +7,6 @@ namespace PgsTwitter.Models.Login
 {
     public class LoginModel
     {
+        public String Name { get; set; }
     }
 }

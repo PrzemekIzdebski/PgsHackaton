@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PgsTwitter.Models.Home;
+using PgsTwitter.Services;
 
 namespace PgsTwitter.Controllers
 {
@@ -14,7 +15,11 @@ namespace PgsTwitter.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var model = new HomeModel()
+                {
+                    UserName = LoginServices.UserName
+                };
+            return View(model);
         }
 
         public ActionResult List()

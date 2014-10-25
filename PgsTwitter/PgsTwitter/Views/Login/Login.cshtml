@@ -1,9 +1,16 @@
 ﻿@model PgsTwitter.Models.Login.LoginModel
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Login";
 }
 
-<h2>Welcome</h2>
+<h2>Login</h2>
 
-Please login to our site!
+Welcome to our page. Please login:
+
+@using(Html.BeginForm())
+{
+    @Html.EditorFor(m=>m.Name)
+
+    <input type="submit" value="Login" />
+}
