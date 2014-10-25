@@ -22,13 +22,14 @@ namespace PgsTwitter.Controllers
             var otherUsers = userServices.List();
             var usersNames = otherUsers.Select(u => u.Username).ToList();
             var loggedUserName = LoginServices.UserName;
-            var user = userServices.Load(loggedUserName);
+
+            var likedUsers = userServices.GetObserved(loggedUserName);
 
             var model = new HomeModel()
                 {
                     UserName = loggedUserName,
                     OtherUsersNames = usersNames,
-                    LikeUserNames = user.LikedUsersIds.ToList()
+                    LikeUserNames = likedUsers
                 };
 
             return View(model);

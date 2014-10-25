@@ -135,6 +135,7 @@
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\Login\SkipLoginCheckAttribute.cs" />
     <Compile Include="DataAccess\Dynamo.cs" />
+    <Compile Include="Entities\Observing.cs" />
     <Compile Include="Entities\Table.cs" />
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\User.cs" />

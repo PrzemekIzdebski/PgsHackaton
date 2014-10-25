@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using PgsTwitter.Entities;
 using PgsTwitter.Models.Users;
 
@@ -53,10 +54,22 @@ namespace PgsTwitter.Services
 
         public void AddToObserved(AddObservedModel addObservedModel)
         {
-            var user = context.Load<User>(addObservedModel.ObservingUser);
+            var model = new Observing()
+                {
+                    ObservedUser = addObservedModel.ObservedUser,
+                    ObservingUser = addObservedModel.ObservingUser
+                };
+            var existing = context.Query<Observing>(addObservedModel.ObservingUser, QueryOperator.Equal, addObservedModel.ObservedUser);
+            if (!existing.Any())
+            {
+                context.Save<Observing>(model);    
+            }
+        }
 
-            user.AddToLiked(addObservedModel.ObservedUser);
-            context.Save<User>(user);
+        public List<string> GetObserved(string userName)
+        {
+            var queryResult = context.Query<Observing>(userName);
+            return queryResult.Select(observing => observing.ObservedUser).ToList();
         }
     }
 }
