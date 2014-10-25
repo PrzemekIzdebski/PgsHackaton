@@ -9,6 +9,8 @@ namespace PgsTwitter.Models.Home
     {
         public string UserName { get; set; }
         public List<string> OtherUsersNames { get; set; }
-        public List<string> LikeUserNames { get; set; } 
+        public List<string> LikeUserNames { get; set; }
+        public List<string> ObservedByUsers { get; set; } 
+
     }
 }
