@@ -5,7 +5,44 @@
 }
 
 <h2>Index</h2>
-
-Hello, user @Html.DisplayFor(model => model.UserName) . Do you want to @Html.ActionLink("log out", "LogOut", "Login") ?
-<br/>
+<p>
+    Hello, user @Html.DisplayFor(model => model.UserName) . Do you want to @Html.ActionLink("log out", "LogOut", "Login") ?
+</p>
+<p>
 @Html.ActionLink("Messages", "List", "Message")
+</p>
+<p>
+    See all users:
+
+    <ul>
+        @{
+            foreach (var name in Model.OtherUsersNames)
+            {
+                <li>
+                    @using (Html.BeginForm("AddObserved", "Home"))
+                    {
+                        @Html.Hidden("ObservingUser", Model.UserName)
+                        @Html.Hidden("ObservedUser", name)
+                        @name <input type="submit" value="Like!" />
+                    }
+
+                </li>
+            }
+        }
+
+    </ul>
+</p>
+
+<p>
+See likes users:
+
+    <ul>
+        @{
+            foreach (var name in Model.LikeUserNames)
+            {
+                <li>@name</li>
+            }
+        }
+
+    </ul>
+</p>

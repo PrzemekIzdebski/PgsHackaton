@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PgsTwitter.Models.Home;
+using PgsTwitter.Models.Users;
 using PgsTwitter.Services;
 
 namespace PgsTwitter.Controllers
@@ -17,10 +18,19 @@ namespace PgsTwitter.Controllers
 
         public ActionResult Index()
         {
+            var userServices = new UserServices(Context);
+            var otherUsers = userServices.List();
+            var usersNames = otherUsers.Select(u => u.Username).ToList();
+            var loggedUserName = LoginServices.UserName;
+            var user = userServices.Load(loggedUserName);
+
             var model = new HomeModel()
                 {
-                    UserName = LoginServices.UserName
+                    UserName = loggedUserName,
+                    OtherUsersNames = usersNames,
+                    LikeUserNames = user.LikedUsersIds.ToList()
                 };
+
             return View(model);
         }
 
@@ -28,6 +38,13 @@ namespace PgsTwitter.Controllers
         {
             var model = new Message() {Username = "Zenek"};
             return View(new List<Message>(){model});
+        }
+
+        public ActionResult AddObserved(AddObservedModel addObservedModel)
+        {
+            var usersServices = new UserServices(Context);
+            usersServices.AddToObserved(addObservedModel);
+            return RedirectToAction("Index");
         }
 
     }

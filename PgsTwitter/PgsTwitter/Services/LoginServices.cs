@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Amazon.DynamoDBv2.DataModel;
+using PgsTwitter.Entities;
 
 namespace PgsTwitter.Services
 {
@@ -9,10 +11,15 @@ namespace PgsTwitter.Services
     {
         private const string UserKey = "user";
 
-        public static void LogIn(string user)
+        public static void LogIn(string userName, DynamoDBContext context)
         {
-            HttpContext.Current.Session[UserKey] = user;
+            var userService = new UserServices(context);
+            userService.CreateUserIfNotExists(userName);
+
+            HttpContext.Current.Session[UserKey] = userName;
         }
+
+
 
         public static void LogOut()
         {

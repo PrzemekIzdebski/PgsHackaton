@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using PgsTwitter.Controllers.Login;
 using PgsTwitter.Services;
 
-namespace PgsTwitter.Controllers
+namespace PgsTwitter.Controllers.Login
 {
     public class CheckUserFilter : IAuthorizationFilter
     {
