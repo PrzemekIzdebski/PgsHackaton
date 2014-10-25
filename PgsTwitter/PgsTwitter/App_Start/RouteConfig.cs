@@ -19,6 +19,12 @@ namespace PgsTwitter
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Messages",
+                url: "{controller}/{action}/{username}",
+                defaults: new { controller = "Message", action = "List" }
+            );
         }
     }
 }

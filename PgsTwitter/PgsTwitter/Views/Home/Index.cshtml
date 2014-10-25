@@ -38,9 +38,9 @@ See likes users:
 
     <ul>
         @{
-            foreach (var name in Model.LikeUserNames)
+            foreach (var user in Model.LikeUserNames)
             {
-                <li>@name</li>
+                <li>@Html.ActionLink(user, "List", "Message", new {username = user}, null)</li>
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using PgsTwitter.Models.Message;
 using PgsTwitter.Services;
 
@@ -13,9 +14,14 @@ namespace PgsTwitter.Controllers
             MessageService = new MessageService(Context);
         }
 
-        public ActionResult List()
+        public ActionResult List(string username)
         {
-            var msgs = MessageService.GetMessages(LoginServices.UserName);
+            if (username.IsNullOrWhiteSpace())
+            {
+                username = LoginServices.UserName;
+            }
+
+            var msgs = MessageService.GetMessages(username);
             return View(msgs);
         }
 
