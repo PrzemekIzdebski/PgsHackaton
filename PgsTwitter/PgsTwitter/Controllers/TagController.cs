@@ -22,5 +22,12 @@ namespace PgsTwitter.Controllers
             return View(model);
         }
 
+        public ActionResult Tag(string id)
+        {
+            var service = new MessageService(Context);
+            var messages = service.GetMessagesByTag(id);
+            return View(messages);
+        }
+
     }
 }

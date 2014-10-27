@@ -9,5 +9,7 @@ namespace PgsTwitter.Models.Tag
     {
         public string Name { get; set; }
         public int Count { get; set; }
+
+        public List<Entities.Message> Message { get; set; } 
     }
 }

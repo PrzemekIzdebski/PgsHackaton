@@ -2,6 +2,7 @@
 {
     public static class Table
     {
+        public static string TagMessageIndex = "TagMessageIndex";
         public const string Users = "users";
         public const string Messages = "messages";
         public const string Observing = "observing";

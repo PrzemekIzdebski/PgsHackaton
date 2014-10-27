@@ -31,6 +31,12 @@ namespace PgsTwitter.Services
             return msgs.ToList();
         }
 
+        public ICollection<Message> GetMessagesByTag(string tag)
+        {
+            var msgs = _context.Query<TagMessage>(tag);
+            return msgs.Select(msg => msg.AsMessage()).ToList();
+        }
+
         public void PostMessage(string username, string text)
         {
             var msg = new Message
@@ -43,11 +49,11 @@ namespace PgsTwitter.Services
             var tags = ParseTags(text);
             foreach (var tag in tags)
             {
-                AddToTag(tag);
+                AddToTag(tag, msg);
             }
         }
 
-        private void AddToTag(string tagName)
+        private void AddToTag(string tagName, Message message)
         {
             var tag = _context.Load<Tag>(tagName);
             if (tag == null)
@@ -60,7 +66,15 @@ namespace PgsTwitter.Services
             }
             tag.Count += 1;
             _context.Save(tag);
-
+            var tagMessage = new TagMessage()
+                {
+                    Tag = tagName,
+                    Username = message.Username,
+                    PostedOn = message.PostedOn,
+                    Text = message.Text,
+                    MessageDigest = message.Digest
+                };
+            _context.Save(tagMessage);
         }
 
         private List<string> ParseTags(string text)

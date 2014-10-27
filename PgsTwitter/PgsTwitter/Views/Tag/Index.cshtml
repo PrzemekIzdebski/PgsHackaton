@@ -11,7 +11,7 @@
             foreach (var tag in Model)
             {
                 <li>
-                    @tag.Name : @tag.Count
+                    @Html.ActionLink(tag.Name, "Tag", new {id = tag.Name}, null) : @tag.Count
                 </li>
             }
         }

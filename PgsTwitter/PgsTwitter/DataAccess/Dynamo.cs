@@ -46,6 +46,80 @@ namespace PgsTwitter.DataAccess
             {
                 CreateTagTable(client);
             }
+
+            if (!tables.TableNames.Contains(Table.TagMessage))
+            {
+                CreateTagMessageTable(client);
+            }
+        }
+
+        private static void CreateTagMessageTable(IAmazonDynamoDB client)
+        {
+            var createTableRequest = new CreateTableRequest();
+            createTableRequest.TableName = Table.TagMessage;
+
+            createTableRequest.KeySchema = new List<KeySchemaElement>
+            {
+                new KeySchemaElement
+                {
+                    AttributeName = "Tag",
+                    KeyType = KeyType.HASH
+                },
+                new KeySchemaElement
+                {
+                    AttributeName = "MessageDigest",
+                    KeyType = KeyType.RANGE
+                }
+            };
+
+            createTableRequest.LocalSecondaryIndexes = new List<LocalSecondaryIndex>()
+                {
+                    new LocalSecondaryIndex()
+                        {
+                            IndexName = Table.TagMessageIndex,
+                            KeySchema = new List<KeySchemaElement>
+                            {
+                                new KeySchemaElement
+                                {
+                                    AttributeName = "Tag",
+                                    KeyType = KeyType.HASH
+                                },
+                                new KeySchemaElement
+                                {
+                                    AttributeName = "PostedOn",
+                                    KeyType = KeyType.RANGE
+                                }
+                            },
+                            Projection = new Projection()
+                                {
+                                    ProjectionType = ProjectionType.ALL
+                                }
+
+                        }
+                };
+
+            createTableRequest.AttributeDefinitions = new List<AttributeDefinition>
+            {
+                new AttributeDefinition
+                {
+                    AttributeName = "Tag",
+                    AttributeType = ScalarAttributeType.S
+                },
+                new AttributeDefinition
+                {
+                    AttributeName = "MessageDigest",
+                    AttributeType = ScalarAttributeType.S
+                },
+                new AttributeDefinition
+                {
+                    AttributeName = "PostedOn",
+                    AttributeType = ScalarAttributeType.N
+                }
+            };
+
+            createTableRequest.ProvisionedThroughput = new ProvisionedThroughput() { ReadCapacityUnits = 1, WriteCapacityUnits = 1 };
+
+            client.CreateTable(createTableRequest);
         }
 
         private static void CreateTagTable(IAmazonDynamoDB client)

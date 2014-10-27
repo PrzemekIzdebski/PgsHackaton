@@ -1,0 +1,23 @@
+﻿@model System.Collections.Generic.ICollection<PgsTwitter.Entities.Message>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Messages</h2>
+
+<table>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostedOn )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text )
+        </td>
+    </tr>
+}
+</table>

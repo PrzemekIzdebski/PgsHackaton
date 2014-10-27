@@ -14,5 +14,10 @@ namespace PgsTwitter.Entities
 
         [DynamoDBRangeKey]
         public long PostedOn { get; set; }
+
+        public string Digest
+        {
+            get { return string.Format("{0} {1}", Username, PostedOn); }
+        }
     }
 }

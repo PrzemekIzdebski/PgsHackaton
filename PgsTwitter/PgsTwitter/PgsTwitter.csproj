@@ -136,6 +136,7 @@
     <Compile Include="Entities\Table.cs" />
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\Tag.cs" />
+    <Compile Include="Entities\TagMessage.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -242,6 +243,7 @@
     <Content Include="Views\Message\List.cshtml" />
     <Content Include="Views\Message\Add.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
+    <Content Include="Views\Tag\Tag.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
