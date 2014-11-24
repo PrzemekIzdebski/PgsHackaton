@@ -5,9 +5,12 @@ namespace PgsTwitter.Entities
 {
     [DynamoDBTable(Table.Messages)]
     public class Message
-    {
+    {   
         [DynamoDBHashKey]
-        public string Username { get; set; }
+        public string Receiver { get; set; }
+
+        [DynamoDBProperty]
+        public string Author { get; set; }
 
         [DynamoDBProperty]
         public string Text { get; set; }
@@ -17,7 +20,7 @@ namespace PgsTwitter.Entities
 
         public string Digest
         {
-            get { return string.Format("{0} {1}", Username, PostedOn); }
+            get { return string.Format("{0} {1}", Receiver, PostedOn); }
         }
     }
 }

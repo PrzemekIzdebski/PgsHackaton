@@ -43,7 +43,7 @@ namespace PgsTwitter.Services
             {
                 PostedOn = DateTime.Now.Ticks,
                 Text = text,
-                Username = username
+                Receiver = username
             };
             _context.Save(msg);
             var tags = ParseTags(text);
@@ -69,7 +69,7 @@ namespace PgsTwitter.Services
             var tagMessage = new TagMessage()
                 {
                     Tag = tagName,
-                    Username = message.Username,
+                    Username = message.Receiver,
                     PostedOn = message.PostedOn,
                     Text = message.Text,
                     MessageDigest = message.Digest

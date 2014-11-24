@@ -30,7 +30,7 @@ namespace PgsTwitter.Entities
                 {
                     PostedOn = PostedOn,
                     Text = Text,
-                    Username = Username
+                    Receiver = Username
                 };
         }
     }

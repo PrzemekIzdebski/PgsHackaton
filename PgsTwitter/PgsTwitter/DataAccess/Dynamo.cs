@@ -218,7 +218,7 @@ namespace PgsTwitter.DataAccess
             {
                 new KeySchemaElement
                 {
-                    AttributeName = "Username",
+                    AttributeName = "Receiver",
                     KeyType = KeyType.HASH
                 },
                 new KeySchemaElement
@@ -232,7 +232,7 @@ namespace PgsTwitter.DataAccess
             {
                 new AttributeDefinition
                 {
-                    AttributeName = "Username",
+                    AttributeName = "Receiver",
                     AttributeType = ScalarAttributeType.S
                 },
                 new AttributeDefinition
