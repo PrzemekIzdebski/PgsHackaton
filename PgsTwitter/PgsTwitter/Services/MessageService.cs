@@ -54,7 +54,7 @@ namespace PgsTwitter.Services
                 var msg = new Message
                     {
                         PostedOn = postedOn,
-                        Author = username,
+                        Sender = username,
                         Text = text,
                         Receiver = tag
                     };
@@ -70,7 +70,7 @@ namespace PgsTwitter.Services
                 var msg = new Message
                     {
                         PostedOn = postedOn,
-                        Author = username,
+                        Sender = username,
                         Text = text,
                         Receiver = observingUser
                     };
@@ -83,7 +83,7 @@ namespace PgsTwitter.Services
             var msg = new Message
                 {
                     PostedOn = postedOn,
-                    Author = username,
+                    Sender = username,
                     Text = text,
                     Receiver = username
                 };

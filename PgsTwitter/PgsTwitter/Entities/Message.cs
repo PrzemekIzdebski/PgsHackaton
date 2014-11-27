@@ -10,7 +10,7 @@ namespace PgsTwitter.Entities
         public string Receiver { get; set; }
 
         [DynamoDBProperty]
-        public string Author { get; set; }
+        public string Sender { get; set; }
 
         [DynamoDBProperty]
         public string Text { get; set; }
