@@ -12,7 +12,22 @@ namespace PgsTwitter.Entities
         [DynamoDBProperty]
         public string Text { get; set; }
 
+        [DynamoDBProperty]
+        public string Id { get; set; }
+
         [DynamoDBRangeKey]
         public long PostedOn { get; set; }
+    }
+    [DynamoDBTable(Table.MessageFollowers)]
+    public class MessageFollower
+    {
+        [DynamoDBHashKey]
+        public string Author { get; set; }
+
+        [DynamoDBRangeKey]
+        public string Follower { get; set; }
+
+        [DynamoDBProperty]
+        public string MessageId { get; set; }
     }
 }

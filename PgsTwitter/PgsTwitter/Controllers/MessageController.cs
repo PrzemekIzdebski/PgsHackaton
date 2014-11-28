@@ -16,18 +16,13 @@ namespace PgsTwitter.Controllers
 
         public ActionResult List(string username)
         {
-            //if (username.IsNullOrWhiteSpace())
-            //{
-            //    username = LoginServices.UserName;
-            //}
-
-            var msgs = MessageService.GetMessages(username);
+            var msgs = MessageService.GetMessagesBy(username);
             return View(msgs);
         }
 
         public ActionResult My()
         {
-            var msgs = MessageService.GetMessages(LoginServices.UserName);
+            var msgs = MessageService.GetMessagesFor(LoginServices.UserName);
             return View("List", msgs);
         }
 

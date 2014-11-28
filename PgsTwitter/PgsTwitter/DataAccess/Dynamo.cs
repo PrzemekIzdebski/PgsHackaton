@@ -41,6 +41,70 @@ namespace PgsTwitter.DataAccess
             {
                 CreateObservingTable(client);
             }
+
+            if (!tables.TableNames.Contains(Table.MessageFollowers))
+            {
+                CreateMessageFollowersTable(client);
+            }
+        }
+
+        private static void CreateMessageFollowersTable(IAmazonDynamoDB client)
+        {
+            var createTableRequest = new CreateTableRequest();
+            createTableRequest.TableName = Table.Observing;
+
+            createTableRequest.KeySchema = new List<KeySchemaElement>
+            {
+                new KeySchemaElement
+                {
+                    AttributeName = "ObservingUser",
+                    KeyType = KeyType.HASH
+                },
+                new KeySchemaElement()
+                    {
+                        AttributeName = "ObservedUser",
+                        KeyType = KeyType.RANGE
+                    }
+            };
+
+            createTableRequest.GlobalSecondaryIndexes = new List<GlobalSecondaryIndex>()
+                {
+                    new GlobalSecondaryIndex()
+                        {
+                            IndexName = Table.ObservedIndex,
+                            KeySchema = new List<KeySchemaElement>
+                            {
+                                new KeySchemaElement
+                                {
+                                    AttributeName = "ObservedUser",
+                                    KeyType = KeyType.HASH
+                                }
+                            },
+                            ProvisionedThroughput = new ProvisionedThroughput() { ReadCapacityUnits = 1, WriteCapacityUnits = 1 },
+                            Projection = new Projection()
+                                {
+                                    ProjectionType = ProjectionType.ALL
+                                }
+                        }
+                };
+
+            createTableRequest.AttributeDefinitions = new List<AttributeDefinition>
+            {
+                new AttributeDefinition
+                {
+                    AttributeName = "ObservingUser",
+                    AttributeType = ScalarAttributeType.S
+                },
+                new AttributeDefinition
+                {
+                    AttributeName = "ObservedUser",
+                    AttributeType = ScalarAttributeType.S
+                }
+            };
+
+            createTableRequest.ProvisionedThroughput = new ProvisionedThroughput() { ReadCapacityUnits = 1, WriteCapacityUnits = 1 };
+
+            client.CreateTable(createTableRequest);
         }
 
         private static void CreateObservingTable(IAmazonDynamoDB client)
@@ -134,6 +198,27 @@ namespace PgsTwitter.DataAccess
                     AttributeType = ScalarAttributeType.N
                 },
             };
+
+            createTableRequest.GlobalSecondaryIndexes = new List<GlobalSecondaryIndex>()
+                {
+                    new GlobalSecondaryIndex()
+                        {
+                            IndexName = Table.ObservedIndex,
+                            KeySchema = new List<KeySchemaElement>
+                            {
+                                new KeySchemaElement
+                                {
+                                    AttributeName = "ObservedUser",
+                                    KeyType = KeyType.HASH
+                                }
+                            },
+                            ProvisionedThroughput = new ProvisionedThroughput() { ReadCapacityUnits = 1, WriteCapacityUnits = 1 },
+                            Projection = new Projection()
+                                {
+                                    ProjectionType = ProjectionType.ALL
+                                }
+                        }
+                };
 
             createTableRequest.ProvisionedThroughput = new ProvisionedThroughput() { ReadCapacityUnits = 1, WriteCapacityUnits = 1 };
 
