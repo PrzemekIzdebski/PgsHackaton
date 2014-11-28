@@ -33,49 +33,72 @@ namespace PgsTwitter.Services
 
         public ICollection<Message> GetMessagesByTag(string tag)
         {
-            var msgs = _context.Query<TagMessage>(tag);
-            return msgs.Select(msg => msg.AsMessage()).ToList();
+            var msgs = _context.Query<Message>("#" + tag);
+            return msgs.ToList();
         }
 
         public void PostMessage(string username, string text)
         {
-            var msg = new Message
-            {
-                PostedOn = DateTime.Now.Ticks,
-                Text = text,
-                Username = username
-            };
-            _context.Save(msg);
+            var postedOn = DateTime.Now.Ticks;
+
+            AddMessageToAuthor(username, text, postedOn);
+            AddToObservingUsers(username, text, postedOn);
+            AddToTags(username, text, postedOn);
+        }
+
+        private void AddToTags(string username, string text, long postedOn)
+        {
             var tags = ParseTags(text);
             foreach (var tag in tags)
             {
-                AddToTag(tag, msg);
+                var msg = new Message
+                    {
+                        PostedOn = postedOn,
+                        Sender = username,
+                        Text = text,
+                        Receiver = tag
+                    };
+                _context.Save(msg);
             }
         }
 
-        private void AddToTag(string tagName, Message message)
+        private void AddToObservingUsers(string username, string text, long postedOn)
         {
-            var tag = _context.Load<Tag>(tagName);
-            if (tag == null)
+            var observingUsers = GetObserving(username);
+            foreach (var observingUser in observingUsers)
             {
-                tag = new Tag()
+                var msg = new Message
                     {
-                        Name = tagName,
-                        Count = 0
+                        PostedOn = postedOn,
+                        Sender = username,
+                        Text = text,
+                        Receiver = observingUser
                     };
+                _context.Save(msg);
             }
-            tag.Count += 1;
-            _context.Save(tag);
-            var tagMessage = new TagMessage()
-                {
-                    Tag = tagName,
-                    Username = message.Username,
-                    PostedOn = message.PostedOn,
-                    Text = message.Text,
-                    MessageDigest = message.Digest
-                };
-            _context.Save(tagMessage);
         }
+
+        private void AddMessageToAuthor(string username, string text, long postedOn)
+        {
+            var msg = new Message
+                {
+                    PostedOn = postedOn,
+                    Sender = username,
+                    Text = text,
+                    Receiver = username
+                };
+            _context.Save(msg);
+        }
+
+        private List<string> GetObserving(string userName)
+        {
+            var queryResult = _context.Query<Observing>(userName, new DynamoDBOperationConfig()
+            {
+                IndexName = PgsTwitter.Entities.Table.ObservedIndex
+            });
+            return queryResult.Select(observing => observing.ObservingUser).ToList();
+        }
+
 
         private List<string> ParseTags(string text)
         {
